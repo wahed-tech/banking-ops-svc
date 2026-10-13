@@ -1,0 +1,57 @@
+version: "2"
+linters:
+  enable:
+    - bodyclose
+    - dogsled
+    - dupl
+    - errorlint
+    - exhaustive
+    - funlen
+    - gocritic
+    - gocyclo
+    - nakedret
+    - nilerr
+    - noctx
+    - paralleltest
+    - revive
+    - tparallel
+    - unconvert
+    - unparam
+  settings:
+    funlen:
+      lines: 200
+      statements: 45
+    gocyclo:
+      min-complexity: 30
+    govet:
+      disable:
+        - fieldalignment
+        - shadow
+      enable-all: true
+    revive:
+      rules:
+        - name: errorf
+          disabled: true
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - vendor
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - vendor
+      - third_party$
+      - builtin$
+      - examples$

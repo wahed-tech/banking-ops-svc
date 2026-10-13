@@ -1,0 +1,24 @@
+coverage:
+  paths:
+    - cov.out
+  badge:
+    path: docs/coverage.svg
+push:
+  if: is_default_branch
+  message: Update by octocov [skip ci]
+codeToTestRatio:
+  code:
+    - '**/*.go'
+    - '!**/*_test.go'
+  test:
+    - '**/*_test.go'
+diff:
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
+comment:
+  if: is_pull_request
+  hideFooterLink: true
+report:
+  if: is_default_branch
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
