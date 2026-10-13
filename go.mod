@@ -6,7 +6,6 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/jackc/pgx/v5 v5.7.5
 	github.com/spf13/cobra v1.9.1
-	github.com/stretchr/testify v1.11.1
 	github.com/wahed-tech/go-lib/v2 v2.3.10
 	github.com/wahed-tech/protobuf-definitions v1.18.5
 	golang.org/x/sync v0.18.0
@@ -63,7 +62,6 @@ require (
 	github.com/nicksnyder/go-i18n/v2 v2.6.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.67.4 // indirect
