@@ -1,0 +1,12 @@
+tracing:
+  collectorAddress: "127.0.0.1:5775"
+  disabled: "true"
+kafka:
+  bootstrapServers: localhost:9092
+postgres:
+  username: postgres
+  password: postgres
+  host: localhost
+  db: banking_ops_svc_test
+  sslMode: disable
+  migrationsDir: db/migrations

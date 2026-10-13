@@ -1,0 +1,14 @@
+name: Deploy
+on:
+  release:
+    types: [published]
+  push:
+    branches:
+      - master
+      - feature/deploy
+jobs:
+  deploy:
+    uses: wahed-tech/centralised-gh-actions/.github/workflows/deploy.yml@master
+    with:
+      image: banking-ops-svc
+    secrets: inherit

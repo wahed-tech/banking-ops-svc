@@ -1,0 +1,16 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - '.github/workflows/**'
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+jobs:
+  build:
+    uses: wahed-tech/centralised-gh-actions/.github/workflows/build.yml@master
+    secrets: inherit

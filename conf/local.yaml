@@ -1,0 +1,14 @@
+server:
+  host: 0.0.0.0
+  port: 8080
+
+kafka:
+  bootstrapServers: localhost:9092
+
+postgres:
+  username: postgres
+  password: postgres
+  host: localhost
+  db: banking_ops_svc
+  sslMode: disable
+  migrationsDir: db/migrations
