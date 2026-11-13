@@ -6,11 +6,14 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/wahed-tech/banking-ops-svc/api"
+	"github.com/wahed-tech/banking-ops-svc/auth"
 	"github.com/wahed-tech/banking-ops-svc/conf"
 	"github.com/wahed-tech/banking-ops-svc/proc"
 	"github.com/wahed-tech/banking-ops-svc/repository"
+	"github.com/wahed-tech/banking-ops-svc/schema"
 	"github.com/wahed-tech/go-lib/v2/cmds"
 	"github.com/wahed-tech/go-lib/v2/handler"
+	"github.com/wahed-tech/go-lib/v2/jwt"
 	"github.com/wahed-tech/go-lib/v2/prom"
 	"github.com/wahed-tech/go-lib/v2/server"
 	"github.com/wahed-tech/go-lib/v2/skafka"
@@ -38,7 +41,23 @@ func serve(cmd *cobra.Command, _ []string) error {
 	}
 	defer pgPool.Close()
 
-	go server.Start(cancel, api.NewRouter(api.NewPingHandler(pgPool)), conf.R.Server.Host, conf.R.Server.Port)
+	keyFunc, err := jwt.NewKeyFuncURL([]string{conf.R.Auth.JWKSURL})
+	if err != nil {
+		return err
+	}
+
+	authenticator, err := auth.NewAuthenticator(keyFunc, conf.R.Auth)
+	if err != nil {
+		return err
+	}
+
+	gqlSchema, err := schema.New()
+	if err != nil {
+		return err
+	}
+
+	router := api.NewRouter(api.NewPingHandler(pgPool), authenticator, api.GraphQL(&gqlSchema), api.ParseOrigins(conf.R.Auth.AllowedOrigins))
+	go server.Start(cancel, router, conf.R.Server.Host, conf.R.Server.Port)
 
 	producer := skafka.NewProducer(conf.R.Kafka.ConfigMap)
 	defer producer.Close()

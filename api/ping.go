@@ -16,7 +16,7 @@ type PingHandler struct {
 	db pinger
 }
 
-type PingResponse struct {
+type pingResponse struct {
 	Status   string `json:"status"`
 	Postgres string `json:"postgres"`
 }
@@ -29,10 +29,10 @@ func NewPingHandler(db pinger) *PingHandler {
 // smoke-tested end to end through the ingress.
 func (h *PingHandler) Ping() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		status, resp := http.StatusOK, PingResponse{Status: "ok", Postgres: "ok"}
+		status, resp := http.StatusOK, pingResponse{Status: "ok", Postgres: "ok"}
 		if err := h.db.Ping(r.Context()); err != nil {
 			log.Error("postgres ping failed", "", err)
-			status, resp = http.StatusServiceUnavailable, PingResponse{Status: "degraded", Postgres: "unreachable"}
+			status, resp = http.StatusServiceUnavailable, pingResponse{Status: "degraded", Postgres: "unreachable"}
 		}
 
 		w.Header().Set("Content-Type", "application/json")

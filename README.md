@@ -18,6 +18,6 @@ curl localhost:8080/v1/ping   # {"status":"ok","postgres":"ok"}
 
 ## Commands
 
-- `app serve` — REST API (`/healthz`, `/v1/...`) + Kafka consumer
+- `app serve` — GraphQL API (`/graphql`) + probes (`/healthz`, `/v1/ping`) + Kafka consumer
 - `app migratedb up` — applies `db/migrations` (golang-migrate); runs as an initContainer in k8s
 - `app commands-watcher` — account command events (redact data, email update)

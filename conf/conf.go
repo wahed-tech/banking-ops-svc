@@ -1,8 +1,9 @@
 package conf
 
 import (
-	"fmt"
+	"net"
 	"net/url"
+	"strconv"
 
 	"github.com/wahed-tech/go-lib/v2/cfg"
 	"github.com/wahed-tech/go-lib/v2/log"
@@ -17,7 +18,17 @@ type RootConf struct {
 	Server   cfg.Server
 	Kafka    KafkaConf
 	Postgres PostgresConf
+	Auth     AuthConf
 	Tracing  tracing.Config
+}
+
+type AuthConf struct {
+	JWKSURL        string
+	Issuer         string
+	Audience       string
+	SSOProviderID  string
+	AllowedDomain  string
+	AllowedOrigins string
 }
 
 type PostgresConf struct {
@@ -31,8 +42,15 @@ type PostgresConf struct {
 }
 
 func (r PostgresConf) URL() string {
-	return fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s",
-		url.QueryEscape(r.Username), url.QueryEscape(r.Password), r.Host, r.Port, r.DB, r.SSLMode)
+	u := url.URL{
+		Scheme:   "postgres",
+		User:     url.UserPassword(r.Username, r.Password),
+		Host:     net.JoinHostPort(r.Host, strconv.Itoa(r.Port)),
+		Path:     "/" + r.DB,
+		RawQuery: url.Values{"sslmode": {r.SSLMode}}.Encode(),
+	}
+
+	return u.String()
 }
 
 type KafkaConf struct {
