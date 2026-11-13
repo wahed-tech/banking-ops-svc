@@ -1,0 +1,4 @@
+auth:
+  jwksUrl: https://omwnkrxshtfegrafsozs.supabase.co/auth/v1/.well-known/jwks.json
+  issuer: https://omwnkrxshtfegrafsozs.supabase.co/auth/v1
+  ssoProviderId: d7660649-7844-4ec9-9732-339bf489d106

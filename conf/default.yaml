@@ -25,6 +25,13 @@ postgres:
   db: "" #Read from ENV_VARS
   sslMode: require
   migrationsDir: "/etc/banking-ops-svc/db/migrations"
+auth:
+  jwksUrl: "" #Read from ENV_VARS
+  issuer: "" #Read from ENV_VARS
+  audience: authenticated
+  ssoProviderId: "" #Read from ENV_VARS
+  allowedDomain: wahed.com
+  allowedOrigins: "" #Read from ENV_VARS, comma-separated portal origins
 tracing:
   collectorAddress: "" #Read from ENV_VARS
   disabled: "" #Read from ENV_VARS
