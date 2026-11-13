@@ -196,7 +196,8 @@
       <ul>
         <li>Shows data only → read Supabase directly.</li>
         <li>Changes anything → goes through banking-ops-svc.</li>
-        <li>banking-ops-svc checks the login token on every call, and only the portal's website can call it.</li>
+        <li>banking-ops-svc checks the login token on every portal API call (/graphql). Only the health checks (/healthz, /v1/ping) are open.</li>
+        <li>Browsers let only the portal's website call the API (CORS). That is a browser rule, not the security lock: the token check is the lock.</li>
         <li>The portal holds no secrets. The Griffin token stays in AWS.</li>
       </ul>
     </div>
